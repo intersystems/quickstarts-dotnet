@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <entityFramework>
+    <providers>
+      <provider invariantName="InterSystems.Data.IRISClient" type="InterSystems.Data.Entity.ProviderServices, InterSystems.Data.IRISEntity6" />
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+</configuration>
