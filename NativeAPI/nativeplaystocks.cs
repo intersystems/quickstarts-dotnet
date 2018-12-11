@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Native API
+* to store stock data in a custom data structure.
+*
+* NOTES: When running,
+*      1. Choose option 1 to test the global value
+*      2. Choose option 2 to store the stock data in a custom structure.
+*      3. Choose option 3 to retrieve and view the stock data from this custom structure.
+*      4. Choose option 4 to call population methods within InterSystems IRIS to generate better information for trades
+*/
+
+using System;
 using InterSystems.Data.IRISClient;
 using InterSystems.Data.IRISClient.ADO;
 using System.Collections;
@@ -19,7 +30,7 @@ namespace myApp
 
             try
             {
-                //Making connection
+                // Making connection
                 IRISConnection connection = new IRISConnection();
                 connection.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace = " +
                                         Namespace + "; Password = " + password + "; User ID = " + username;
@@ -85,22 +96,24 @@ namespace myApp
                 Console.WriteLine("Error - Exception thrown: " + e);
             }
         }
+
+        // Task 1: Test Globals
         public static void SetTestGlobal(IRIS irisNative)
         {
-            //Write to a test global
+            // Write to a test global
             irisNative.Set(8888, "^testglobal", "1");
             int globalValue = (int)irisNative.GetInt32("^testglobal", "1");
             Console.WriteLine("The value of ^testglobal(1) is " + globalValue);
         }
 
+        // Task 2: Store the stock data in a custom structure
         public static void StoreStockData(IRIS irisNative, IRISConnection dbconnection)
         {
-            //Clear global from previous runs
+            // Clear global from previous runs
             irisNative.Kill("^nyse");
             Console.WriteLine("Storing stock data using Native API...");
 
-            //Get stock data using ADO.NET and write global
-
+            // Get stock data using ADO.NET and write global
             try
             {
                 String sql = "select top 1000 TransDate, Name, StockClose, StockOpen, High, Low, Volume from Demo.Stock";
@@ -140,11 +153,12 @@ namespace myApp
             }
         }
 
+        // Task 3: Retrieve and view the stock data from this custom structure.
         public static void PrintNodes(IRIS irisNative, String globalName)
         {
             Console.WriteLine("Iterating over " + globalName + " globals");
 
-            // iterate over all nodes forwards
+            // Iterate over all nodes forwards
             IRISIterator iter = irisNative.GetIRISIterator(globalName);
             Console.WriteLine("walk forwards");
             foreach (var v in iter)
@@ -153,6 +167,7 @@ namespace myApp
             }
         }
 
+        // Task 4: Call population methods within InterSystems IRIS to generate better information for trades
         public static Trade[] GenerateData(IRIS irisNative, int objectCount)
         {
             Trade[] data = new Trade[objectCount];

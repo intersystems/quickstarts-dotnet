@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Entity Framework
+* to simulates real-time stock trades:
+*
+* NOTES: When running,
+*      1. Choose option 1 to create a sample trade.
+*      2. Choose option 2 to save this trade
+*      3. Choose option 3 to generate 1000 generic trades using XEP
+*      4. Choose option 4 to view all trades
+*      5. Choose option 5 to generate 1000 generic trades using ADO.NET. Notes that it much slower compare to XEP
+*/
+
+using System;
 using InterSystems.Data.IRISClient;
 using InterSystems.XEP;
 using System.Data.SqlClient;
@@ -52,32 +64,32 @@ namespace myApp
 
                         // Task 2
                         case "1":
-                            // uncomment below line to run Task 2 - Create Trade
+                            // Uncomment below line to run Task 2 - Create Trade
                             sampleArray = Task2CreateTrade(sampleArray);
                             break;
                         case "2":
-                            // uncomment below line to run Task 2 - Save Trade
+                            // Uncomment below line to run Task 2 - Save Trade
                             Task2SaveTrade(sampleArray, xepEvent);
                             sampleArray = null;
                             break;
 
                         // Task 3
                         case "3":
-                            // uncomment below line to run Task 3
+                            // Uncomment below line to run Task 3
                             Task3(sampleArray, xepEvent);
                             break;
 
                         // Task 5 + Task 6
                         case "4":
-                            // uncomment below line to run Task 5
+                            // Uncomment below line to run Task 5
                             Task5(xepEvent);
-                            // uncomment below line to run Task 6
+                            // Uncomment below line to run Task 6
                             // Task6(xepEvent);
                             break;
 
                         // Task 4
                         case "5":
-                            // uncomment below line to run Task 4
+                            // Uncomment below line to run Task 4
                             Task4(sampleArray, xepPersister);
                             break;
                         case "6":
@@ -96,8 +108,10 @@ namespace myApp
             {
                 Console.WriteLine("Interactive prompt failed:\n" + e);
             }
-        } // end main
+        }
 
+        // Task 2: Create a sample trade
+        // Note: Make a trade on 2016-08-12 for $300/share, 2 shares, and your own name as the trader
         public static Trade[] Task2CreateTrade(Trade[] sampleArray)
         {
             //Create trade object
@@ -138,6 +152,8 @@ namespace myApp
             Trade[] tradeArray = CreateTrade(name, date, price, shares, traderName, sampleArray);
             return tradeArray;
         }
+
+        // Task 2: Saving trade.
         public static void Task2SaveTrade(Trade[] sampleArray, Event xepEvent)
         {
             //Save trades
@@ -152,6 +168,7 @@ namespace myApp
             }
         }
 
+        // Task 3: Generate trades and save it to database using XEP.
         public static void Task3(Trade[] sampleArray, Event xepEvent)
         {
             Console.WriteLine("How many items do you want to generate? ");
@@ -162,14 +179,15 @@ namespace myApp
             {
                 Console.WriteLine("Number of items has to bigger than 0");
             }
-            //Get sample generated array to store
+            // Get sample generated array to store
             sampleArray = Trade.generateSampleData(number);
 
-            //Save generated trades
+            // Save generated trades
             long totalStore = XEPSaveTrades(sampleArray, xepEvent);
             Console.WriteLine("Execution time: " + totalStore + "ms");
         }
 
+        // Task 4: Generate trades and save it to database using ADO.NET.
         public static void Task4(Trade[] sampleArray, EventPersister xepPersister)
         {
             Console.WriteLine("How many items to generate using ADO.NET? ");
@@ -188,6 +206,7 @@ namespace myApp
             Console.WriteLine("Execution time: " + totalADOStore + " ms");
         }
 
+        // Task 5: View all trades
         public static void Task5(Event xepEvent)
         {
             Console.WriteLine("Fetching all. Please wait...");
@@ -195,6 +214,7 @@ namespace myApp
             Console.WriteLine("Execution time: " + totalFetch + "ms");
         }
 
+        // Task 5: Update all trades and view them
         public static void Task6(Event xepEvent)
         {
             Console.WriteLine("Fetching all. Please wait...");
@@ -202,6 +222,7 @@ namespace myApp
             Console.WriteLine("Execution time: " + totalFetch + "ms");
         }
 
+        // Create sample and add it to the array
         public static Trade[] CreateTrade(String stockName, DateTime tDate, double price, int shares, String trader, Trade[] sampleArray)
         {
             Trade sampleObject = new Trade(stockName, tDate, price, shares, trader); //
@@ -225,6 +246,7 @@ namespace myApp
             return newArray;
         }
 
+        // Save trade into database using xepEvent
         public static long XEPSaveTrades(Trade[] sampleArray, Event xepEvent)
         {
             long startTime = DateTime.Now.Ticks; //To calculate execution time
@@ -234,11 +256,12 @@ namespace myApp
             return endtime - startTime;
         }
 
+        // Save trade into database using ADO.NET - which is slower than using XEP
         public static long StoreUsingADO(EventPersister persist, Trade[] sampleArray)
         {
             long totalTime = new long();
             long startTime = DateTime.Now.Ticks;
-            //Loop through objects to insert
+            // Loop through objects to insert
             try
             {
                 IRISDataAdapter da = new IRISDataAdapter();
@@ -304,9 +327,10 @@ namespace myApp
             return totalTime / TimeSpan.TicksPerMillisecond;
         }
 
+        // Iterate over all trades
         public static long ViewAll(Event xepEvent)
         {
-            //Create and execute query using EventQuery
+            // Create and execute query using EventQuery
             String sqlQuery = "SELECT * FROM MyApp.Trade WHERE purchaseprice > ? ORDER BY stockname, purchaseDate";
             EventQuery<Trade> xepQuery = xepEvent.CreateQuery<Trade>(sqlQuery);
             xepQuery.AddParameter(0);    // find stocks purchased > $0/share (all)
@@ -325,9 +349,10 @@ namespace myApp
             return totalTime / TimeSpan.TicksPerMillisecond;
         }
 
+        // Update all trade and iterate over them.
         public static long ViewAllAfterUpdate(Event xepEvent)
         {
-            //Create and execute query using EventQuery
+            // Create and execute query using EventQuery
             String sqlQuery = "SELECT * FROM myApp.Trade WHERE purchaseprice > ? ORDER BY stockname, purchaseDate";
             EventQuery<Trade> xepQuery = xepEvent.CreateQuery<Trade>(sqlQuery);
             xepQuery.AddParameter("0");    // find stocks purchased > $0/share (all)

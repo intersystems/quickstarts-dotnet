@@ -21,7 +21,7 @@ namespace myApp
             Console.WriteLine("Hello World!");
 
             String host = "localhost";
-            int port = 51777;
+            int port = 51773;
             String username = "SuperUser";
             String password = "SYS";
             String Namespace = "USER";
@@ -51,37 +51,37 @@ namespace myApp
 
                         // Task 2
                         case "1":
-                            // uncomment below line to run Task 2
+                            // Uncomment below line to run Task 2
                             Task2(connect);
                             break;
 
                         // Task 3
                         case "2":
-                            // uncomment below line to run Task 3
+                            // Uncomment below line to run Task 3
                             Task3(connect);
                             break;
 
                         // Task 4
                         case "3":
-                            // uncomment below line to run Task 4
+                            // Uncomment below line to run Task 4
                             Task4(connect);
                             break;
 
                         // Task 5
                         case "4":
-                            // uncomment below line to run Task 5
+                            // Uncomment below line to run Task 5
                             Task5(connect);
                             break;
 
                         // Task 6
                         case "5":
-                            // uncomment below line to run Task 6
+                            // Uncomment below line to run Task 6
                             Task6(connect);
                             break;
 
                         // Task 7
                         case "6":
-                            // uncomment below line to run Task 7
+                            // Uncomment below line to run Task 7
                             Task7(connect);
                             break;
                         case "7":
@@ -98,7 +98,7 @@ namespace myApp
             {
                 Console.WriteLine("Interactive prompt failed:\n" + e);
             }
-        }// endmain
+        }
 
         // Task 2: View top 10 stocks for selected date
         // Note: Choose 2016/08/12 for date

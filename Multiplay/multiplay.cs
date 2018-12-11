@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform using ADO.NET, XEP, and Native API side-by-side
+* to store stock company information.
+* In short:
+*   ADO.NET is used to quickly retrieve all distinct stock names from the Demo.Stock table.
+*   Native API is used to call population methods within InterSystems IRIS for founder and mission statement.
+*   XEP is used to store these objects directly to the database, avoiding any translation back to tables.
+*/
+
+using System;
 using InterSystems.Data.IRISClient;
 using InterSystems.Data.IRISClient.ADO;
 using InterSystems.XEP;
@@ -23,8 +32,8 @@ namespace myApp
                 EventPersister xepPersister = PersisterFactory.CreatePersister();
                 xepPersister.Connect(host, port, Namespace, username, password);
                 Console.WriteLine("Connected to InterSystems IRIS.");
-                xepPersister.DeleteExtent(className);   // remove old test data
-                xepPersister.ImportSchema(className);   // import flat schema
+                xepPersister.DeleteExtent(className);   // Remove old test data
+                xepPersister.ImportSchema(className);   // Import flat schema
 
                 // Create Event
                 Event xepEvent = xepPersister.GetEvent(className);
@@ -41,7 +50,7 @@ namespace myApp
 
                 // Task 4
                 // Comment out Task 2, Task 3 and uncomment the line below to run task 4
-                Task4(connection, native, xepEvent);
+                // Task4(connection, native, xepEvent);
 
                 xepEvent.Close();
                 xepPersister.Close();
@@ -52,6 +61,7 @@ namespace myApp
             }
         }
 
+        // Task 2: Query data using ADO.NET
         public static void Task2(IRISADOConnection connection)
         {
             String sql = "SELECT distinct name FROM demo.stock";
@@ -64,6 +74,8 @@ namespace myApp
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
+
+        // Task 3: Generate sample stock info and stored into database using XEP
         public static void Task3(IRISADOConnection connection, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
@@ -76,8 +88,6 @@ namespace myApp
                 StockInfo stock = new StockInfo();
                 stock.name = (string)reader[reader.GetOrdinal("Name")];
                 Console.WriteLine("created stockinfo array.");
-
-                //generate mission and founder names (Native API)
                 stock.founder = "test founder";
                 stock.mission = "some mission statement";
                 Console.WriteLine("Adding object with name " + stock.name + " founder " + stock.founder + " and mission " + stock.mission);
@@ -88,6 +98,7 @@ namespace myApp
             Console.ReadKey();
         }
 
+        // Task 4: Use Native API call population methods within InterSystems IRIS for founder and mission statement
         public static void Task4(IRISADOConnection connection, IRIS native, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
@@ -101,7 +112,7 @@ namespace myApp
                 stock.name = (string)reader[reader.GetOrdinal("Name")];
                 Console.WriteLine("created stockinfo array.");
 
-                //generate mission and founder names (Native API)
+                // Generate mission and founder names (Native API)
                 stock.founder = native.ClassMethodString("%PopulateUtils", "Name");
                 stock.mission = native.ClassMethodString("%PopulateUtils", "Mission");
                 Console.WriteLine("Adding object with name " + stock.name + " founder " + stock.founder + " and mission " + stock.mission);

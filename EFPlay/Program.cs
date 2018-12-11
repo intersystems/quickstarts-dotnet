@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Entitu Framework, a third party tool.
+* to store stock data in a custom data structure.
+*
+* NOTES: When running,
+*      1. Choose option 1 to make a new trade for AMZN on 2016-08-12 with price: 200, # of shares: 2 and your own information as a new trader.
+*      2. Choose option 2 to delete all traders and trades.
+*      3. Choose option 3 to find trader based on ID.
+*      4. Choose option 4 to find all traders with your last name.
+*      5. Choose option 5 to view the leader board.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +23,7 @@ namespace EFPlay
     {
         static void Main(string[] args)
         {
-            //Starting interactive prompt
+            // Starting interactive prompt
              
              using (var ctx = new HRContext())
              {
@@ -32,45 +44,33 @@ namespace EFPlay
                      Console.WriteLine(option);
                      switch (option)
                      {
-                        case "0":
-                            var persons = (from b in ctx.Persons
-                                                orderby b.lastname
-                                                select b).ToList();
-
-                            // Write all blogs out to Console
-                            Console.WriteLine("Query completed with following results:");
-                            foreach (var blog in persons)
-                            {
-                                Console.WriteLine(" - " + blog.lastname + ", " + blog.firstname + " with ID: " + blog.PersonId);
-                            }
-                            break;
                         // Task 2
                         case "1":
-                            // uncomment below line to run Task 2
+                            // Uncomment below line to run Task 2
                             Task2(ctx);
                             break;
 
                         // Task 3
                         case "2":
-                            // uncomment below line to run Task 3
+                            // Uncomment below line to run Task 3
                             Task3(ctx);
                             break;
 
                         // Task 4
                         case "3":
-                            // uncomment below line to run Task 4
+                            // Uncomment below line to run Task 4
                             Task4(ctx);
                             break;
 
                         // Task 5
                         case "4":
-                            // uncomment below line to run Task 5
+                            // Uncomment below line to run Task 5
                             Task5(ctx);
                             break;
 
                         // Task 6
                         case "5":
-                            // uncomment below line to run Task 6
+                            // Uncomment below line to run Task 6
                             Task6(ctx);
                             break;
 
@@ -86,7 +86,8 @@ namespace EFPlay
                  }
              } 
         }
-
+        // Create a sample trade
+        // Notes: make a new trade for AMZN on 2016-08-12 with price: 200, # of shares: 2 and your own information as a new trader
         public static void Task2(HRContext ctx)
         {
             Console.Out.Write("Stock name: ");
@@ -110,8 +111,6 @@ namespace EFPlay
                 Console.Out.Write("Link trade to trader with which ID? ");
                 long.TryParse(Console.ReadLine(), out long traderID);
                 Person person1 = ctx.Persons.Where(p => p.PersonId == traderID).FirstOrDefault();
-                //Trade2 trade = new Trade2() { stockName = stockName, purchaseDate = tempDat e, purchasePrice = price, shares = shares, Trade2Id = traderID };
-                //Trade2 trade = new Trade2() { stockName = stockName, purchaseDate = tempDate, purchasePrice = price, shares = shares, trader = person1 };
                 Trade2 trade = new Trade2(stockName, tempDate, price, shares, person1);
                 ctx.Trades.Add(trade);
                 ctx.SaveChanges();
@@ -128,7 +127,6 @@ namespace EFPlay
                 Console.Out.Write("Trader phone: ");
                 String phone = Console.ReadLine();
                 Person person2 = new Person() { firstname = traderFirstName, lastname = traderLastName, phone = phone };
-                //Trade2 trade = new Trade2() { stockName = stockName, purchaseDate = tempDate, purchasePrice = price, shares = shares, trader = person2 };
                 Trade2 trade = new Trade2(stockName, tempDate, price, shares, person2);
                 ctx.Trades.Add(trade);
                 ctx.Persons.Add(person2);
@@ -141,6 +139,7 @@ namespace EFPlay
             }
         }
 
+        // Task 3: Delete all traders and trades
         public static void Task3(HRContext ctx)
         {
             Console.WriteLine("transaction started");
@@ -150,6 +149,7 @@ namespace EFPlay
             ctx.SaveChanges();
         }
 
+        // Task 4: Retrieve trader information by ID
         public static void Task4(HRContext ctx)
         {
             Console.Out.Write("Find trader for which ID? ");
@@ -168,6 +168,8 @@ namespace EFPlay
             }
         }
 
+        // Task 5: Retrieve all traders by last name
+        // Notes: Using option 1 to generate few trades with the same trader's last name then use option 4 to view all of them
         public static void Task5(HRContext ctx)
         {
             Console.Out.Write("Find all traders with which last name? ");
@@ -185,6 +187,8 @@ namespace EFPlay
             }
         }
 
+        // Task 6: Displaying the leader board.
+        // Notes: Using option 1 to generate few trades then use option 6 to view all of them
         public static void Task6(HRContext ctx)
         {
             Console.Out.WriteLine("Displaying leaderboard.");
@@ -214,7 +218,7 @@ namespace EFPlay
             public Decimal percentIncrease { get; set; }
         }
 
-        //Context Class
+        // Context Class
         public class HRContext : DbContext
         {
             public HRContext() : base("name=StockDBConnectionString")
@@ -225,7 +229,7 @@ namespace EFPlay
 
         }
 
-        //Data Classes
+        // Data Classes
         public class Person
         {
             public Person() { }
