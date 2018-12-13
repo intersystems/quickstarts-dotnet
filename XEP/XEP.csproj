@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trade.cs" />
-    <Compile Include="XEP.cs" />
+    <Compile Include="xepplaystocks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
