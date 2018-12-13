@@ -5,13 +5,14 @@
 *   ADO.NET is used to quickly retrieve all distinct stock names from the Demo.Stock table.
 *   Native API is used to call population methods within InterSystems IRIS for founder and mission statement.
 *   XEP is used to store these objects directly to the database, avoiding any translation back to tables.
+*
 */
 
 using System;
+using System.Collections.Generic;
 using InterSystems.Data.IRISClient;
 using InterSystems.Data.IRISClient.ADO;
 using InterSystems.XEP;
-using System.Collections.Generic;
 
 namespace myApp
 {
@@ -19,11 +20,18 @@ namespace myApp
     {
         static void Main(string[] args)
         {
-            String host = "localhost";
-            int port = 51777;
-            String username = "SuperUser";
-            String password = "SYS";
-            String Namespace = "USER";
+            Console.WriteLine("Hello World!");
+
+            // Initialize dictionary to store connection details from config.txt
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary = generateConfig("..\\..\\..\\config.txt");
+
+            // Retrieve connection information from configuration file
+            string host = dictionary["host"];
+            int port = Convert.ToInt32(dictionary["port"]);
+            string Namespace = dictionary["namespace"];
+            string username = dictionary["username"];
+            string password = dictionary["password"];
             String className = "myApp.StockInfo";
 
             try
@@ -40,17 +48,42 @@ namespace myApp
                 IRISADOConnection connection = (IRISADOConnection)xepPersister.GetAdoNetConnection();
                 IRIS native = IRIS.CreateIRIS(connection);
 
-                // Task 2
-                // Uncomment the line below to run task 2
-                // Task2(connection);
+                // Starting interactive prompt
+                bool always = true;
+                while (always) {
+                    Console.WriteLine("1. Retrieve All Stock Names");
+                    Console.WriteLine("2. Create Objects");
+                    Console.WriteLine("3. Populate Properties");
+                    Console.WriteLine("4. Quit");
+                    Console.WriteLine("What would you like to do? ");
 
-                // Task 3
-                // Uncomment the line below to run task 3
-                // Task3(connection, xepEvent);
+                    String option = Console.ReadLine();
+                    switch (option) {
+                    // Task 2
+                    case "1":
+                        Task2(connection);
+                        break;
 
-                // Task 4
-                // Comment out Task 2, Task 3 and uncomment the line below to run task 4
-                // Task4(connection, native, xepEvent);
+                    // Task 3
+                    case "2":
+                        Task3(connection, xepEvent);
+                        break;
+
+                    // Task 4
+                    case "3":
+                        Task4(connection, native, xepEvent);
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Exited.");
+                        always = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option. Try again!");
+                        break;
+                    }
+                }
 
                 xepEvent.Close();
                 xepPersister.Close();
@@ -71,11 +104,9 @@ namespace myApp
             {
                 Console.WriteLine(reader[reader.GetOrdinal("Name")]);
             }
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
         }
 
-        // Task 3: Generate sample stock info and stored into database using XEP
+        // Task 3: Generate sample stock info objects and stored into database using XEP
         public static void Task3(IRISADOConnection connection, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
@@ -94,8 +125,6 @@ namespace myApp
                 array.Add(stock);
             }
             xepEvent.Store(array.ToArray());
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
         }
 
         // Task 4: Use Native API call population methods within InterSystems IRIS for founder and mission statement
@@ -119,8 +148,30 @@ namespace myApp
                 array.Add(stock);
             }
             xepEvent.Store(array.ToArray());
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
+        }
+
+        // Helper method: Get connection details from config file
+        static IDictionary<string, string> generateConfig(string filename)
+        {
+            // Initial empty dictionary to store connection details
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            // Iterate over all lines in configuration file
+            string[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (string line in lines)
+            {
+                string[] info = line.Replace(" ", String.Empty).Split(':');
+                // Check if line contains enough information
+                if (info.Length >= 2)
+                {
+                    dictionary[info[0]] = info[1];
+                }
+                else
+                {
+                    Console.WriteLine("Ignoring line: " + line);
+                }
+            }
+            return dictionary;
         }
     }
 }

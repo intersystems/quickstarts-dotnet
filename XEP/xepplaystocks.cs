@@ -8,33 +8,38 @@
 *      3. Choose option 3 to generate 1000 generic trades using XEP
 *      4. Choose option 4 to view all trades
 *      5. Choose option 5 to generate 1000 generic trades using ADO.NET. Notes that it much slower compare to XEP
+*      6. Choose option 6 to update all trades
 */
 
 using System;
+using System.Data;
+using System.Collections.Generic;
 using InterSystems.Data.IRISClient;
 using InterSystems.XEP;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace myApp
 {
-    class xepplaystocksTask7
+    class xepplaystocks
     {
         static void Main(string[] args)
         {
-            Trade[] sampleArray = null;
             Console.WriteLine("Hello World!");
+            Trade[] sampleArray = null;
 
-            String host = "localhost";
-            int port = 51777;
-            String username = "SuperUser";
-            String password = "SYS";
-            String Namespace = "USER";
+            // Initialize dictionary to store connection details from config.txt
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary = generateConfig("..\\..\\..\\config.txt");
+
+            // Retrieve connection information from configuration file
+            string host = dictionary["host"];
+            int port = Convert.ToInt32(dictionary["port"]);
+            string Namespace = dictionary["namespace"];
+            string username = dictionary["username"];
+            string password = dictionary["password"];
             String className = "myApp.Trade";
 
             try
             {
-
                 // Connect to database using EventPersister
                 EventPersister xepPersister = PersisterFactory.CreatePersister();
                 xepPersister.Connect(host, port, Namespace, username, password);
@@ -54,48 +59,48 @@ namespace myApp
                     Console.WriteLine("3. Generate and save multiple trades");
                     Console.WriteLine("4. Retrieve all trades; show execution statistics");
                     Console.WriteLine("5. ADO.NET Comparison - Create and save multiple trades");
-                    Console.WriteLine("6. Quit");
+                    Console.WriteLine("6. Update all trades; show execution statistics");
+                    Console.WriteLine("7. Quit");
                     Console.WriteLine("What would you like to do? ");
 
                     String option = Console.ReadLine();
-
                     switch (option)
                     {
 
                         // Task 2
                         case "1":
-                            // Uncomment below line to run Task 2 - Create Trade
                             sampleArray = Task2CreateTrade(sampleArray);
                             break;
                         case "2":
-                            // Uncomment below line to run Task 2 - Save Trade
                             Task2SaveTrade(sampleArray, xepEvent);
                             sampleArray = null;
                             break;
 
                         // Task 3
                         case "3":
-                            // Uncomment below line to run Task 3
                             Task3(sampleArray, xepEvent);
                             break;
 
-                        // Task 5 + Task 6
+                        // Task 5
                         case "4":
-                            // Uncomment below line to run Task 5
                             Task5(xepEvent);
-                            // Uncomment below line to run Task 6
-                            // Task6(xepEvent);
                             break;
 
                         // Task 4
                         case "5":
-                            // Uncomment below line to run Task 4
                             Task4(sampleArray, xepPersister);
                             break;
+
+                        // Task 6
                         case "6":
+                            Task6(xepEvent);
+                            break;
+
+                        case "7":
                             Console.WriteLine("Exited.");
                             always = false;
                             break;
+
                         default:
                             Console.WriteLine("Invalid option. Try again!");
                             break;
@@ -214,7 +219,7 @@ namespace myApp
             Console.WriteLine("Execution time: " + totalFetch + "ms");
         }
 
-        // Task 5: Update all trades and view them
+        // Task 6: Update all trades and view them
         public static void Task6(Event xepEvent)
         {
             Console.WriteLine("Fetching all. Please wait...");
@@ -222,7 +227,7 @@ namespace myApp
             Console.WriteLine("Execution time: " + totalFetch + "ms");
         }
 
-        // Create sample and add it to the array
+        // Create a sample trade and add it to the array
         public static Trade[] CreateTrade(String stockName, DateTime tDate, double price, int shares, String trader, Trade[] sampleArray)
         {
             Trade sampleObject = new Trade(stockName, tDate, price, shares, trader); //
@@ -246,7 +251,7 @@ namespace myApp
             return newArray;
         }
 
-        // Save trade into database using xepEvent
+        // Save trade into database using XEP
         public static long XEPSaveTrades(Trade[] sampleArray, Event xepEvent)
         {
             long startTime = DateTime.Now.Ticks; //To calculate execution time
@@ -371,6 +376,30 @@ namespace myApp
             long totalTime = DateTime.Now.Ticks - startTime;
             xepQuery.Close();
             return totalTime / TimeSpan.TicksPerMillisecond;
+        }
+
+        // Helper method: Get connection details from config file
+        static IDictionary<string, string> generateConfig(string filename)
+        {
+            // Initial empty dictionary to store connection details
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            // Iterate over all lines in configuration file
+            string[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (string line in lines)
+            {
+                string[] info = line.Replace(" ", String.Empty).Split(':');
+                // Check if line contains enough information
+                if (info.Length >= 2)
+                {
+                    dictionary[info[0]] = info[1];
+                }
+                else
+                {
+                    Console.WriteLine("Ignoring line: " + line);
+                }
+            }
+            return dictionary;
         }
     }
 }

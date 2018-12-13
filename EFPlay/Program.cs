@@ -3,7 +3,7 @@
 * to store stock data in a custom data structure.
 *
 * NOTES: When running,
-*      1. Choose option 1 to make a new trade for AMZN on 2016-08-12 with price: 200, # of shares: 2 and your own information as a new trader.
+*      1. Choose option 1 to create a new trade.
 *      2. Choose option 2 to delete all traders and trades.
 *      3. Choose option 3 to find trader based on ID.
 *      4. Choose option 4 to find all traders with your last name.
@@ -46,47 +46,43 @@ namespace EFPlay
                      {
                         // Task 2
                         case "1":
-                            // Uncomment below line to run Task 2
                             Task2(ctx);
                             break;
 
                         // Task 3
                         case "2":
-                            // Uncomment below line to run Task 3
                             Task3(ctx);
                             break;
 
                         // Task 4
                         case "3":
-                            // Uncomment below line to run Task 4
                             Task4(ctx);
                             break;
 
                         // Task 5
                         case "4":
-                            // Uncomment below line to run Task 5
                             Task5(ctx);
                             break;
 
                         // Task 6
                         case "5":
-                            // Uncomment below line to run Task 6
                             Task6(ctx);
                             break;
 
-                         case "6":
-                             Console.Out.WriteLine("Exited.");
-                             active = false;
-                             break;
+                        case "6":
+                            Console.Out.WriteLine("Exited.");
+                            active = false;
+                            break;
 
-                         default:
-                             Console.Out.WriteLine("Invalid option. Try again!");
-                             break;
+                        default:
+                            Console.Out.WriteLine("Invalid option. Try again!");
+                            break;
                      }
                  }
              } 
         }
-        // Create a sample trade
+
+        // Task 2: Create a sample trade
         // Notes: make a new trade for AMZN on 2016-08-12 with price: 200, # of shares: 2 and your own information as a new trader
         public static void Task2(HRContext ctx)
         {
@@ -131,7 +127,7 @@ namespace EFPlay
                 ctx.Trades.Add(trade);
                 ctx.Persons.Add(person2);
                 ctx.SaveChanges();
-                Console.WriteLine("Trade and person saved.");
+                Console.WriteLine("Trade saved for " + person2.firstname + " " + person2.lastname + " with ID " + person2.PersonId);
             }
             else
             {
@@ -142,7 +138,7 @@ namespace EFPlay
         // Task 3: Delete all traders and trades
         public static void Task3(HRContext ctx)
         {
-            Console.WriteLine("transaction started");
+            Console.WriteLine("Transaction started");
             ctx.Persons.RemoveRange(ctx.Persons);
             ctx.Trades.RemoveRange(ctx.Trades);
             Console.WriteLine("All trades and traders deleted from the database.");
@@ -188,7 +184,7 @@ namespace EFPlay
         }
 
         // Task 6: Displaying the leader board.
-        // Notes: Using option 1 to generate few trades then use option 6 to view all of them
+        // Notes: Using option 1 to generate few trades then use option 6 to view their gain in descending order
         public static void Task6(HRContext ctx)
         {
             Console.Out.WriteLine("Displaying leaderboard.");

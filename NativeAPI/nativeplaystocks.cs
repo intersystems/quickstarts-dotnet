@@ -7,69 +7,78 @@
 *      2. Choose option 2 to store the stock data in a custom structure.
 *      3. Choose option 3 to retrieve and view the stock data from this custom structure.
 *      4. Choose option 4 to call population methods within InterSystems IRIS to generate better information for trades
+*      5. Choose option 5 to call InterSystems IRIS routine directly
 */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using InterSystems.Data.IRISClient;
 using InterSystems.Data.IRISClient.ADO;
-using System.Collections;
 
 namespace myApp
 {
-    class nativeAPIplaystocks
+    class nativeplaystocks
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
 
-            String host = "localhost";
-            int port = 51777;
-            String username = "SuperUser";
-            String password = "SYS";
-            String Namespace = "USER";
+            // Initialize dictionary to store connection details from config.txt
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary = generateConfig("..\\..\\..\\config.txt");
+
+            // Retrieve connection information from configuration file
+            string host = dictionary["host"];
+            int port = Convert.ToInt32(dictionary["port"]);
+            string Namespace = dictionary["namespace"];
+            string username = dictionary["username"];
+            string password = dictionary["password"];
 
             try
             {
-                // Making connection
+                // Making connection using IRISConnecion
                 IRISConnection connection = new IRISConnection();
+
+                // Create connection string
                 connection.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace = " +
                                         Namespace + "; Password = " + password + "; User ID = " + username;
                 connection.Open();
                 Console.WriteLine("Connected to InterSystems IRIS.");
 
                 IRIS irisNative = IRIS.CreateIRIS(connection);
-                // Task 5 - Uncomment below line to run task 5
-                // Console.WriteLine("on InterSystems IRIS version: " + irisNative.FunctionString("PrintVersion","^StocksUtil"));
-                bool always = true;
 
+                // Starting interactive prompt
+                bool always = true;
                 while (always)
                 {
                     Console.WriteLine("1. Test");
                     Console.WriteLine("2. Store stock data");
                     Console.WriteLine("3. View stock data");
                     Console.WriteLine("4. Generate Trades");
-                    Console.WriteLine("5. Quit");
+                    Console.WriteLine("5. Call Routines");
+                    Console.WriteLine("6. Quit");
                     Console.WriteLine("What would you like to do? ");
+
                     String option = Console.ReadLine();
                     switch (option)
                     {
                         // Task 1
                         case "1":
-                            // Uncomment below line to run task 1
                             SetTestGlobal(irisNative);
                             break;
 
                         // Task 2
                         case "2":
-                            // Uncomment below line to run task 2
                             StoreStockData(irisNative, connection);
                             break;
 
                         // Task 3
                         case "3":
-                            // Uncomment 5 lines below to run task 3
                             Console.WriteLine("Printing nyse globals...");
-                            long startPrint = DateTime.Now.Ticks; //To calculate execution time
+                            long startPrint = DateTime.Now.Ticks; // To calculate execution time
+
+                            // Iterate over all nodes
                             PrintNodes(irisNative, "nyse");
                             long totalPrint = DateTime.Now.Ticks - startPrint;
                             Console.WriteLine("Execution time: " + totalPrint/TimeSpan.TicksPerMillisecond + " ms");
@@ -77,13 +86,19 @@ namespace myApp
 
                         // Task 4
                         case "4":
-                            // Uncomment below line to run task 4
                             GenerateData(irisNative, 10);
                             break;
+
+                        // Task 5
                         case "5":
+                            Console.WriteLine("on InterSystems IRIS version: " + irisNative.FunctionString("PrintVersion","^StocksUtil"));
+                            break;
+
+                        case "6":
                             Console.WriteLine("Exited.");
                             always = false;
                             break;
+
                         default:
                             Console.WriteLine("Invalid option. Try again!");
                             break;
@@ -193,6 +208,30 @@ namespace myApp
                 Console.WriteLine(e);
             }
             return data;
+        }
+
+        // Helper method: Get connection details from config file
+        static IDictionary<string, string> generateConfig(string filename)
+        {
+            // Initial empty dictionary to store connection details
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            // Iterate over all lines in configuration file
+            string[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (string line in lines)
+            {
+                string[] info = line.Replace(" ", String.Empty).Split(':');
+                // Check if line contains enough information
+                if (info.Length >= 2)
+                {
+                    dictionary[info[0]] = info[1];
+                }
+                else
+                {
+                    Console.WriteLine("Ignoring line: " + line);
+                }
+            }
+            return dictionary;
         }
     }
 }

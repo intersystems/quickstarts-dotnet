@@ -10,6 +10,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using InterSystems.Data.IRISClient;
 
 namespace myApp
@@ -20,19 +21,28 @@ namespace myApp
         {
             Console.WriteLine("Hello World!");
 
-            String host = "localhost";
-            int port = 51773;
-            String username = "SuperUser";
-            String password = "SYS";
-            String Namespace = "USER";
+            // Initialize dictionary to store connection details from config.txt
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary = generateConfig("..\\..\\..\\config.txt");
+
+            // Retrieve connection information from configuration file
+            string host = dictionary["host"];
+            int port = Convert.ToInt32(dictionary["port"]);
+            string Namespace = dictionary["namespace"];
+            string username = dictionary["username"];
+            string password = dictionary["password"];
 
             try
             {
+                // Using IRISADOConnection to connect
                 IRISADOConnection connect = new IRISADOConnection();
+
+                // Create connection string
                 connect.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace =  " + Namespace + "; Password = " + password + "; User ID = " + username;
                 connect.Open();
                 Console.WriteLine("Connected to InterSystems IRIS.");
 
+                // Starting interactive prompt
                 bool always = true;
                 while (always)
                 {
@@ -51,43 +61,39 @@ namespace myApp
 
                         // Task 2
                         case "1":
-                            // Uncomment below line to run Task 2
                             Task2(connect);
                             break;
 
                         // Task 3
                         case "2":
-                            // Uncomment below line to run Task 3
                             Task3(connect);
                             break;
 
                         // Task 4
                         case "3":
-                            // Uncomment below line to run Task 4
                             Task4(connect);
                             break;
 
                         // Task 5
                         case "4":
-                            // Uncomment below line to run Task 5
                             Task5(connect);
                             break;
 
                         // Task 6
                         case "5":
-                            // Uncomment below line to run Task 6
                             Task6(connect);
                             break;
 
                         // Task 7
                         case "6":
-                            // Uncomment below line to run Task 7
                             Task7(connect);
                             break;
+
                         case "7":
                             Console.WriteLine("Exited.");
                             always = false;
                             break;
+
                         default:
                             Console.WriteLine("Invalid option. Try again!");
                             break;
@@ -176,7 +182,7 @@ namespace myApp
             PortfolioProfile(connect, sellDate);
         }
 
-        // Helper method: Find top 10 stocks on a particular date
+        // Find top 10 stocks on a particular date
         public static void FindTopOnDate(IRISADOConnection dbconnection, String onDate)
         {
             try
@@ -204,7 +210,7 @@ namespace myApp
             }
         }
 
-        // Helper method: Create Portfolio Table
+        // Create Portfolio Table
         public static void CreatePortfolioTable(IRISADOConnection dbconnection)
         {
             String createTable = "CREATE TABLE Demo.Portfolio(Name varchar(50) unique, PurchaseDate date, PurchasePrice numeric(10,4), Shares int, DateTimeUpdated DateTime)";
@@ -220,7 +226,7 @@ namespace myApp
             }
         }
 
-        // Helper method: Add item to Portfolio Table
+        // Add item to Portfolio Table
         public static void AddPortfolioItem(IRISADOConnection dbconnection, String name, String purchaseDate, String price, int shares)
         {
             DateTime t = DateTime.Now;
@@ -242,7 +248,7 @@ namespace myApp
             }
         }
 
-        // Helper method: Update item in Portfolio Table
+        // Update item in Portfolio Table
         public static void UpdateStock(IRISADOConnection dbconnection, String stockname, String price, String transDate, int shares)
         {
             DateTime t = DateTime.Now;
@@ -272,7 +278,7 @@ namespace myApp
             }
         }
 
-        // Helper method: Delete item from Portfolio Table
+        // Delete item from Portfolio Table
         public static void DeleteStock(IRISADOConnection dbconnection, String stockname)
         {
             try
@@ -296,7 +302,7 @@ namespace myApp
             }
         }
 
-        // Helper method: View Portfolio Table to see % gain or loss 
+        // View Portfolio Table to see % gain or loss
         public static void PortfolioProfile(IRISADOConnection dbconnection, String sellDate)
         {
             decimal cumulStartValue = 0;
@@ -333,6 +339,30 @@ namespace myApp
             {
                 Console.WriteLine("Error printing portfolio information: " + e);
             }
+        }
+
+        // Helper method: Get connection details from config file
+        static IDictionary<string, string> generateConfig(string filename)
+        {
+            // Initial empty dictionary to store connection details
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            // Iterate over all lines in configuration file
+            string[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (string line in lines)
+            {
+                string[] info = line.Replace(" ", String.Empty).Split(':');
+                // Check if line contains enough information
+                if (info.Length >= 2)
+                {
+                    dictionary[info[0]] = info[1];
+                }
+                else
+                {
+                    Console.WriteLine("Ignoring line: " + line);
+                }
+            }
+            return dictionary;
         }
     }
 }
