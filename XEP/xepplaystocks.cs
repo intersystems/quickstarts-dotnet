@@ -116,7 +116,6 @@ namespace myApp
         }
 
         // Task 2: Create a sample trade
-        // Note: Make a trade on 2016-08-12 for $300/share, 2 shares, and your own name as the trader
         public static Trade[] Task2CreateTrade(Trade[] sampleArray)
         {
             //Create trade object

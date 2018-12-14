@@ -31,7 +31,6 @@ namespace EFPlay
 
                  while (active)
                  {
-                    Console.WriteLine("0. Display all traders by name");
                      Console.Out.WriteLine("1. Make a trade (and save)");
                      Console.Out.WriteLine("2. Delete all rows");
                      Console.Out.WriteLine("3. Display trader by ID");
@@ -40,7 +39,7 @@ namespace EFPlay
                      Console.Out.WriteLine("6. Quit");
                      Console.Out.Write("What would you like to do? ");
 
-                     string option = Console.ReadLine(); // Key().ToString(); 
+                     string option = Console.ReadLine();
                      Console.WriteLine(option);
                      switch (option)
                      {

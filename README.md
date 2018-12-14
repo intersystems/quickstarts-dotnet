@@ -4,11 +4,11 @@ It is required for the .NET quickstart which can be found here:
 [.NET Quickstart](https://learning.intersystems.com/course/view.php?name=.NET%20QS) 
 
 ## Contents
-* adoNETplaystocks.cs to see how to store and retrieve data relationally
-* xepplaystocks.cs to see how to quickly store objects
-* nativeplaystocks.cs to see how to run methods within InterSystems IRIS
-* multiplay.cs to see multimodel access using ADO.NET, XEP, and Native API
-* Program.cs to see how to use Entity Framework, a third-party tool to work with objects
+* `adoNETplaystocks.cs` to see how to store and retrieve data relationally
+* `xepplaystocks.cs` to see how to quickly store objects
+* `nativeplaystocks.cs` to see how to run methods within InterSystems IRIS
+* `multiplay.cs` to see multimodel access using ADO.NET, XEP, and Native API
+* `Program.cs` to see how to use Entity Framework, a third-party tool to work with objects
 
 ## How to Run
 To run this code:
