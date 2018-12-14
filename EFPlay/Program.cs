@@ -1,5 +1,5 @@
 ﻿/*
-* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Entitu Framework, a third party tool.
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Entity Framework, a third party tool.
 * to store stock data in a custom data structure.
 *
 * NOTES: When running,
@@ -89,7 +89,7 @@ namespace EFPlay
             Console.Out.Write("Stock name: ");
             String stockName = Console.ReadLine();
 
-            Console.Out.Write("DateTime (YYYY-MM-DD): ");
+            Console.Out.Write("DateTime (YYYY/MM/DD): ");
             DateTime.TryParse(Console.ReadLine(), out DateTime tempDate);
 
             Console.Out.Write("Price: ");

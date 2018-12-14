@@ -230,7 +230,7 @@ namespace myApp
         // Create a sample trade and add it to the array
         public static Trade[] CreateTrade(String stockName, DateTime tDate, double price, int shares, String trader, Trade[] sampleArray)
         {
-            Trade sampleObject = new Trade(stockName, tDate, price, shares, trader); //
+            Trade sampleObject = new Trade(stockName, tDate, price, shares, trader);
             Console.WriteLine("New Trade: " + shares + " shares of " + stockName + " purchased on date " + tDate.ToString() + " at price " + price + " by " + trader + ".");
 
             int currentSize = 0;

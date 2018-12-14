@@ -51,9 +51,9 @@ namespace myApp
                 // Starting interactive prompt
                 bool always = true;
                 while (always) {
-                    Console.WriteLine("1. Retrieve All Stock Names");
-                    Console.WriteLine("2. Create Objects");
-                    Console.WriteLine("3. Populate Properties");
+                    Console.WriteLine("1. Retrieve all stock names");
+                    Console.WriteLine("2. Create objects");
+                    Console.WriteLine("3. Populate properties");
                     Console.WriteLine("4. Quit");
                     Console.WriteLine("What would you like to do? ");
 
