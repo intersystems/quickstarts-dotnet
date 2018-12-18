@@ -1,7 +1,7 @@
 # quickstarts-dotnet
 This code shows ADO.NET, XEP, Native, multi-model, and Entity Framework access. 
 It is required for the .NET QuickStart which can be found here: 
-[.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS) 
+[.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS). 
 You should use this QuickStart to run this sample code.
 
 ## Contents

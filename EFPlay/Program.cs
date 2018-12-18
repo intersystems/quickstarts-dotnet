@@ -2,15 +2,9 @@
 * PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform with Entity Framework, a third party tool.
 * to store stock data in a custom data structure.
 *
-* SET UP: Before running,
-* Open App.config and modify the Server (IP) and password in the connectionString to be the correct values for your InterSystems IRIS instance.
-* Port and user are most likely the defaults but you can verify those as well.
-*
-*   SERVER = "localhost";
-*   port = 51773;
-*   NAMESPACE = "USER";
-*   USER = _SYSTEM;
-*   password = SYS;
+* SET UP: Due to its complexity, Entity Framework requires few more steps to set up IDE and configurations file.
+* Please follow our instructions in section 6 - "Use Entity Framework, an example of a third-party API, to store objects to InterSystems IRIS", of .NET QuickStart.
+* https://learning.intersystems.com/course/view.php?name=.NET%20QS
 *
 * NOTES: When running,
 *      1. Choose option 1 to create a new trade.
