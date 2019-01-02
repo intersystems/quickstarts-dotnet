@@ -29,7 +29,7 @@ namespace myApp
             dictionary = generateConfig("..\\..\\..\\config.txt");
 
             // Retrieve connection information from configuration file
-            string host = dictionary["host"];
+            string ip = dictionary["ip"];
             int port = Convert.ToInt32(dictionary["port"]);
             string Namespace = dictionary["namespace"];
             string username = dictionary["username"];
@@ -41,7 +41,7 @@ namespace myApp
                 IRISConnection connection = new IRISConnection();
 
                 // Create connection string
-                connection.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace = " +
+                connection.ConnectionString = "Server = " + ip + "; Port = " + port + "; Namespace = " +
                                         Namespace + "; Password = " + password + "; User ID = " + username;
                 connection.Open();
                 Console.WriteLine("Connected to InterSystems IRIS.");

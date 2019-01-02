@@ -36,15 +36,15 @@ you need to [load data into your instance](https://github.com/intersystems/Sampl
 
 4. With Microsoft Visual Studio:
 
-* Select **File** → **Open** → **Project/Solution**. Choose the `quickstarts-dotnet.sln` file you recently cloned. 
-* Select **View** → **Solution Explorer** to view project structure.
-* Right click on Solution. Select **Add** → **Existing item**. Choose `config.txt`.
-* Open `config.txt` file and modify the `IP` and `password` to be the correct values for your InterSystems IRIS instance. 
+    * Select **File** → **Open** → **Project/Solution**. Choose the `quickstarts-dotnet.sln` file you recently cloned. 
+    * Select **View** → **Solution Explorer** to view project structure.
+    * Right click on Solution. Select **Add** → **Existing item**. Choose `config.txt`.
+    * Open `config.txt` file and modify the `IP` and `password` to be the correct values for your InterSystems IRIS instance. 
 `Port` and `username` are most likely the defaults but you can verify those as well.
-* Due to its complexity, **Entity Framework** requires a few more steps to set up the IDE and configuration file. 
+    * Due to its complexity, **Entity Framework** requires a few more steps to set up the IDE and configuration file. 
 Please follow our instructions in section 6 - "Use Entity Framework, an example of a third-party API, to store objects to InterSystems IRIS", 
 of [.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS).
 
-You should now have several classes for **ADO.NET**, **XEP**, **Native API**, **multi-model** and **Entity Framework**, 
+You should now have several classes for **ADO.NET**, **XEP**, **Native API**, **multi-model** and **Entity Framework**. 
 
 Detailed instructions are included on the [.NET QuickStart page](https://learning.intersystems.com/course/view.php?name=.NET%20QS).

@@ -31,7 +31,7 @@ namespace myApp
             dictionary = generateConfig("..\\..\\..\\config.txt");
 
             // Retrieve connection information from configuration file
-            string host = dictionary["host"];
+            string ip = dictionary["ip"];
             int port = Convert.ToInt32(dictionary["port"]);
             string Namespace = dictionary["namespace"];
             string username = dictionary["username"];
@@ -42,7 +42,7 @@ namespace myApp
             {
                 // Connect to database using EventPersister
                 EventPersister xepPersister = PersisterFactory.CreatePersister();
-                xepPersister.Connect(host, port, Namespace, username, password);
+                xepPersister.Connect(ip, port, Namespace, username, password);
                 Console.WriteLine("Connected to InterSystems IRIS.");
                 xepPersister.DeleteExtent(className);   // remove old test data
                 xepPersister.ImportSchema(className);   // import flat schema
