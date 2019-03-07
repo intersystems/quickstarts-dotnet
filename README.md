@@ -2,11 +2,8 @@
 This code shows ADO.NET, XEP, Native, multi-model, and Entity Framework access. 
 It is required for the .NET QuickStart which can be found here: 
 [.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS). 
-You should use this QuickStart to run this sample code.
 
 ## Contents
-
-### Code files
 
 * `adoNETplaystocks.cs` to see how to store and retrieve data relationally
 * `xepplaystocks.cs` to see how to quickly store objects
@@ -14,25 +11,20 @@ You should use this QuickStart to run this sample code.
 * `multiplay.cs` to see multi-model access using ADO.NET, XEP, and Native API
 * `Program.cs` to see how to use Entity Framework, a third-party tool to work with objects
 
-### Configuration files
+## Configuration files
 
 * `config.txt`: contains connection details for **ADO.NET**, **XEP**, **Native API** and **multi-model**.
 * `App.config`: located in EFPlay folder, contains connections details, parameters and initial settings for **Entity Framework**. 
 
 ## How to Run
 
-To run this code:
+1.  Verify you have an [<span class="urlformat">instance of InterSystems IRIS</span>](https://learning.intersystems.com/course/view.php?name=Get%20InterSystems%20IRIS), and an IDE that supports Node.js (such as **Visual Studio Code**). If you are using AWS, Azure, or GCP, that you have followed the steps to [change the password for InterSystems IRIS](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ACLOUD#ACLOUD_interact).
 
-1. Visit [Direct Access to InterSystems IRIS](https://learning.intersystems.com/course/view.php?name=Java%20Build), 
-[Microsoft Azure](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/intersystems.intersystems-iris-single-node) or 
-[Google Cloud Platform](https://console.cloud.google.com/marketplace/details/intersystems-launcher/intersystems-iris-community) 
-marketplaces to get InterSystems IRIS instance.
+2.  If you are using AWS, GCP, or Microsoft Azure, load the sample stock data into InterSystems IRIS:  
+    `$ iris load http://github.com/intersystems/Samples-Stock-Data`  
+    If you are using InterSystems Labs, the sample stock data is already loaded. You can skip to the next step.
 
-2. If you use [Microsoft Azure](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/intersystems.intersystems-iris-single-node) or 
-[Google Cloud Platform](https://console.cloud.google.com/marketplace/details/intersystems-launcher/intersystems-iris-community), 
-you need to [load data into your instance](https://github.com/intersystems/Samples-Stock-Data). 
-
-3. Clone the repo
+3. Clone the repo and open it in your IDE.
 
 4. With Microsoft Visual Studio:
 
