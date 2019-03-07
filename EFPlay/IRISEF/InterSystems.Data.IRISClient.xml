@@ -9,6 +9,661 @@
             Version Information
             </summary>
         </member>
+        <member name="T:InterSystems.Data.IRISClient.ADO.IRIS">
+            <summary>
+            <para>
+            <code>IRIS</code> provides various methods that can be used to access
+            the IRIS Global Module. Basic operations such as GET, SET, KILL etc. are
+            supported. There are also methods to execute class methods and routines.
+            </para>
+            <para>
+            All methods will throw an exception on encountering any kind of error.
+            </para>
+            </summary>
+            <remarks>
+            Throughout the API, the subscript argument is defined as <code>params object []</code>.
+            </remarks>
+            <example>
+            <code>
+            // For single subscripts, values can be passed directly
+            double? doubleTest = NativeAPI.GetDouble("myGlobal", "double");
+            
+            // or if the subscript is 1:
+            double? doubleTest = NativeAPI.GetDouble("myGlobal", 1);
+            
+            // For multiple subscripts, use an <code>object []</code> like:
+            NativeAPI.Set(value, "myGlobal", new object[] { 1, "double" });
+            </code>
+            </example>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.CreateIRIS(InterSystems.Data.IRISClient.IRISADOConnection)">
+            <summary>
+            Returns an IRIS object. All API calls are made via this object.
+            </summary>
+            <example>
+            <code>
+                IRISConnection IRISConnect = new IRISConnection();
+                IRISConnect.ConnectionString =
+                 "Server=localhost; Port=51773; Namespace=USER;"
+                 + "Password=SYS; User ID=_SYSTEM;";
+                IRISConnect.Open();
+                IRIS nativeAPI = IRIS.CreateIRIS(IRISConnect);
+            </code>
+            </example>
+            <param name="conn">IRISConnection</param>
+            <returns><code>IRIS</code> object</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Close">
+            <summary>
+            Close the <code>IRIS</code> object.
+            </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetBool(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as a bool.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetBytes(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as a byte [].
+            Undefined nodes or those storing null return null; nodes storing
+            the empty string (String)"" return a one element byte array 
+            containing only a 0 byte (new byte [] { 0 }).
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>byte []</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetInt16(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as an Int16.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>Int16?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetInt32(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as an Int32.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>Int32?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetInt64(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as an Int64.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>Int64?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetObject(System.String,System.Object[])">
+            <summary>
+            Get the value of a global at a given subscript as an object. Returns null if not defined.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>object</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetString(System.String,System.Object[])">
+            <summary>
+            Gets the value of the global as a String. Returns <code>null</code> if
+             node is undefined. This method does some translation between type-less
+            IRIS and typed C#, regarding the empty string and null. A null
+            character in IRIS $CHAR(0) is translated to the empty string in C# "".
+            An empty string in IRIS "" is translated to null in C#. This
+            translation is consistent with the way ADO.NET handles these values.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>string</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetSingle(System.String,System.Object[])">
+            <summary>
+            Gets the value of the global as a Single. Returns <code>null</code> if
+            node is undefined. Returns 0.0 if node value is empty string.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>Single?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetDouble(System.String,System.Object[])">
+            <summary>
+            Gets the value of the global as a Double. Returns <code>null</code> if
+            node is undefined. Returns 0.0 if node value is empty string.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>Double?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetDateTime(System.String,System.Object[])">
+            <summary>
+            Gets the value of the global as a DateTime. Returns <code>null</code> if
+            node is undefined. Returns 0.0 if node value is empty string.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns><code>DateTime?</code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Boolean},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>bool?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Int32},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>Int32?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Int64},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>Int64?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Int16},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>Int16?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Double},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>Double?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.Single},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>Single?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Nullable{System.DateTime},System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>DateTime?</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.String,System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>string</code> value.
+            This method does some translation between typed C# and type-less
+            IRIS, regarding the empty string and null. An empty string in C# ""
+            is translated to the null string character in IRIS $CHAR(0). A null 
+            in C# is translated to the empty string in IRIS. This translation
+            is consistent with the way ADO.NET handles these values.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Byte[],System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the given <code>byte[]</code> value.
+            A null value translates to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.IO.MemoryStream,System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to an instance of an object that implements
+            System.IO.MemoryStream. A null value translates to "" in IRIS. Stored as 
+            a byte [], to recover call GetBytes then initialize a System.IO.MemoryStream
+            with the returned byte [].
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Set(System.Object,System.String,System.Object[])">
+            <summary>
+            Sets the current node's value to the specified value. Can be any of the
+            following types<code>int?</code>, <code>bool?</code>,
+            <code>short?</code>, <code>long?</code>, <code>double?</code>,
+            <code>float?</code>, <code>string</code>, <code>DateTime?</code>,
+            any object annotated with <code>[Serializable]</code>, <code>byte[]</code>. A null value translates 
+            to "" in IRIS.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Kill(System.String,System.Object[])">
+            <summary>
+            Kills the global node including any descendants.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Increment(System.Int64,System.String,System.Object[])">
+            <summary>
+            Increments the specified global with the passed value.
+            A null value is interpreted as 0.
+            </summary>
+            <param name="value"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.IsDefined(System.String,System.Object[])">
+            <summary>
+            Checks if a a global contains data ($DATA). 
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetNodes(System.String,System.Object[])">
+            <summary>
+            This method is for internal use only.
+            Iterates over all subscripts in the $ORDER sense and produces a List of rows.
+            Each row will be returned in a separate byte array.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetNextNode(System.Boolean,System.String,System.Object[])">
+            <summary>
+            Gets the subscript and value of the next global node in a $ORDER sense.
+            Each node is wrapped in $list for transport, so the caller can then use the
+            appropriate List decoding method to get the actual subscript and value.
+             
+             This method is intended for internal use only(IRISIterator) and so is marked package-protected.
+            
+            </summary>
+            <param name="walkBackwards"></param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetIRISIterator(System.String,System.Object[])">
+            <summary>
+             Allows iterating over a global in the $ORDER sense by returning an iterator that can be 
+             used to extract subscripts and global node values.
+             
+             The global reference (globalName + subscripts) passed to this method specifies the root
+             global node.The IRISIterator returned will iterate over the immediate children
+             of the root node. For example, for the following global:
+                  ^gbl(1)="a"
+                  ^gbl(1,11)="b"
+                  ^gbl(1,12)="c"
+                  ^gbl(2)="d"
+             Calling GetIRISIterator("^gbl") will return an iterator that traverses the immediate
+             children of ^gbl, that is, ^gbl(1) and ^gbl(2). Calling GetIRISIterator("^gbl",1) will
+             return an iterator that traverses the immediate children of ^gbl(1), that is, ^gbl(1,11) and ^gbl(1,12).
+            
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetIRISReverseIterator(System.String,System.Object[])">
+            <summary>
+            Just like GetIRISIterator, except the iteration happens in reverse order.
+            </summary>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodBool(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method, passing 0 or more arguments and
+             returning the method's return value as an instance of <code>bool?</code>.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+             <returns>the value returned by the IRIS ObjectScript class method, as an
+            instance of<code> bool</code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodString(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method, passing 0 or more arguments and
+             returning the method's return value as an instance of <code>string</code>.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+             <returns>the value returned by the IRIS ObjectScript class method, as an
+            instance of <code>string</code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodLong(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method, passing 0 or more arguments and
+             returning the method's return value as an instance of <code>long?</code>.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+             <returns>the value returned by the IRIS ObjectScript class method, as an
+            instance of<code> long</code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodDouble(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method, passing 0 or more arguments and
+             returning the method's return value as an instance of <code>double?</code>.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+             <returns>the value returned by the IRIS ObjectScript class method, as an
+            instance of<code> double? </code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodBytes(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method, passing 0 or more arguments and
+             returning the method's return value as an instance of <code>byte []</code>.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+             <returns>the value returned by the IRIS ObjectScript class method, as an
+            instance of<code> byte []</code></returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ClassMethodVoid(System.String,System.String,System.Object[])">
+             <summary>
+            
+             Calls a IRIS ObjectScript class method with no return value, passing 0 or 
+             more arguments.
+             
+             Arguments may be of any of the following types: <code>int?</code>,
+             <code>short?</code>, <code>string</code>, <code>long?</code>,  
+             <code>double?</code>,<code>float?</code>, <code>byte[]</code>, 
+             <code>bool?</code> or<code> DateTime?</code>.
+             Trailing arguments may be omitted, causing default
+             values to be used for those arguments, either by passing fewer than the
+             full number of arguments, or by passing<code>null</code> for trailing
+             arguments.Throws an exception if a non-null argument is passed to the
+             right of a null argument.
+             </summary>
+             <param name="className">className fully qualified name of the IRIS class to which the called method belongs</param>
+             <param name="methodName">name of the IRIS class method</param>
+             <param name="args"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.FunctionString(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="functionName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.FunctionInt(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="functionName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+            <returns>long?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.FunctionDouble(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="functionName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+            <returns>double?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.FunctionBytes(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="functionName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.FunctionBool(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="functionName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+            <returns>bool?</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Procedure(System.String,System.String,System.Object[])">
+            <summary>
+            Calls a IRIS ObjectScript procedure, passing 0 or more arguments.
+            Arguments may be of any of the following types: <code>int?</code>,
+            <code>short?</code>, <code>string</code>, <code>long?</code>, 
+            <code>double?</code>,<code>float?</code>, <code>byte[]</code>,
+            <code>bool?</code> or <code>DateTime?</code>.
+            
+            Trailing arguments may be omitted, causing default
+            values to be used for those arguments, either by passing fewer than the
+            full number of arguments, or by passing <code>null</code> for trailing
+            arguments.
+            </summary>
+            <param name="procedureName">name of the IRIS ObjectScript procedure to call.</param>
+            <param name="routineName">name of the routine containing the procedure.</param>
+            <param name="args">0 or more arguments to pass to the procedure.</param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Lock(System.String,System.Int32,System.String,System.Object[])">
+            <summary>
+            Lock  the global, returns true on success.
+            Note that this method performs an incremental lock and not
+            the implicit unlock before lock feature that is also offered in COS.
+            
+            </summary>
+            <param name="lockMode">combination of the following chars, S for shared lock, E for escalating lock, default is empty string (exclusive and non-escalating)</param>
+            <param name="timeout">amount to wait to acquire the lock in seconds</param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+            <returns>true on success</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.Unlock(System.String,System.String,System.Object[])">
+            <summary>
+            Unlock the global.
+            Note that this method performs an incremental unlock and not the implicit unlock before lock feature that is also offered in COS.
+            </summary>
+            <param name="lockMode">lockMode combination of the following chars, S for shared lock, E for escalating lock, default is empty string (exclusive and non-escalating)</param>
+            <param name="globalName"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.ReleaseAllLocks">
+            <summary>
+            Release all locks associated with the session.
+            </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.TStart">
+             <summary>
+             Start/open a IRIS transaction.
+            
+             DO NOT mix the IRIS(Native) transaction model with the SQL transaction model.
+             If you want to use only Native commands within a transaction, you should always use Native transaction methods.
+             If you want to use a mix of Native and ADO.NET/SQL commands within a transaction, you should turn autoCommit OFF
+             and then always use Native transaction methods.
+             If you want to use only ADO.NET/SQL commands within a transaction, you can either always use SQL transaction
+             methods, or turn autocommit OFF and then always use Native transaction methods.
+             </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.TCommit">
+             <summary>
+            
+             DO NOT mix the IRIS(Native) transaction model with the SQL transaction model.
+             If you want to use only Native commands within a transaction, you should always use Native transaction methods.
+             If you want to use a mix of Native and ADO.NET/SQL commands within a transaction, you should turn autoCommit OFF
+             and then always use Native transaction methods.
+             If you want to use only ADO.NET/SQL commands within a transaction, you can either always use SQL transaction
+             methods, or turn autocommit OFF and then always use Native transaction methods.
+             </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.TRollback">
+            <summary>
+            Roll back all open IRIS transactions in the session.
+             
+             DO NOT mix the IRIS(Native) transaction model with the SQL transaction model.
+             If you want to use only Native commands within a transaction, you should always use Native transaction methods.
+             If you want to use a mix of Native and ADO.NET/SQL commands within a transaction, you should turn autoCommit OFF
+             and then always use Native transaction methods.
+             If you want to use only ADO.NET/SQL commands within a transaction, you can either always use SQL transaction
+             methods, or turn autocommit OFF and then always use Native transaction methods.
+            </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.TRollbackOne">
+            <summary>
+            Roll back the current level IRIS transaction only.
+            If this is a nested transaction, any higher-level transactions will not be rolled back.
+            
+             DO NOT mix the IRIS (Native) transaction model with the SQL transaction model.
+             If you want to use only Native commands within a transaction, you should always use Native transaction methods.
+             If you want to use a mix of Native and ADO.NET/SQL commands within a transaction, you should turn autoCommit OFF
+             and then always use Native transaction methods.
+             If you want to use only ADO.NET/SQL commands within a transaction, you can either always use SQL transaction
+             methods, or turn autocommit OFF and then always use Native transaction methods.
+            </summary>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRIS.GetTLevel">
+             <summary>
+             Get the level of the current nested IRIS transaction.
+             Returns 1 if there is only a single transaction open.Returns 0 if there are no transactions open.
+             This is equivalent to fetching the value of the $TLEVEL special variable.
+            
+             DO NOT mix the IRIS(Native) transaction model with the SQL transaction model.
+            
+             If you want to use only Native commands within a transaction, you should always use Native transaction methods.
+             If you want to use a mix of Native and ADO.NET/SQL commands within a transaction, you should turn autoCommit OFF
+             and then always use Native transaction methods.
+             If you want to use only ADO.NET/SQL commands within a transaction, you can either always use SQL transaction
+             methods, or turn autocommit OFF and then always use Native transaction methods.
+             </summary>
+             <returns>transaction level as int?</returns>
+        </member>
         <member name="T:InterSystems.Data.IRISClient.IRISADOConnection">
             <remarks>
             Represents an open connection to a IRIS database.
@@ -1660,6 +2315,99 @@
             <remarks>
             Represents the method that will handle the InfoMessage event of a <see cref="T:InterSystems.Data.IRISClient.IRISADOConnection"/>.
             </remarks>
+        </member>
+        <member name="T:InterSystems.Data.IRISClient.ADO.IRISIterator">
+            <summary>
+             Allows iterating over a global in the $ORDER sense by returning an iterator that can be 
+             used to extract subscripts and global node values.
+             
+             The global reference (globalName + subscripts) passed to this method specifies the root
+             global node.The IRISIterator returned will iterate over the immediate children
+             of the root node. For example, for the following global:
+                  ^gbl(1)="a"
+                  ^gbl(1,11)="b"
+                  ^gbl(1,12)="c"
+                  ^gbl(2)="d"
+             Calling GetIRISIterator("^gbl") will return an iterator that traverses the immediate
+             children of ^gbl, that is, ^gbl(1) and ^gbl(2). Calling GetIRISIterator("^gbl",1) will
+             return an iterator that traverses the immediate children of ^gbl(1), that is, ^gbl(1,11) and ^gbl(1,12).
+            
+            </summary>
+            <example>
+            <para>
+            //The iterator is most easily used with a foreach loop because it implements the
+            //System.Collections.IEnumerator interface, although the MoveNext() method can be called directly
+            //if desired.
+            //If an <code>IRIS</code> object called IRISNativeAPI has been instantiated, then:
+            </para>
+            <code>
+             foreach (var node in IRISNativeAPI.GetIRISIterator("myGlobalName", "mySubscriptName"))
+             {
+                Console.WriteLine(node);
+             }
+             
+             foreach (var node in IRISNativeAPI.GetIRISReverseIterator("myGlobalName", "mySubscriptName"))
+             {
+                Console.WriteLine(node);
+             }
+            </code>
+            </example>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.#ctor(InterSystems.Data.IRISClient.ADO.IRIS,System.String,System.Int32,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="i"></param>
+            <param name="name"></param>
+            <param name="direction"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.#ctor(InterSystems.Data.IRISClient.ADO.IRIS,System.Int32,System.String,System.Int32,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="i"></param>
+            <param name="prefetchSizeHint"></param>
+            <param name="name"></param>
+            <param name="direction"></param>
+            <param name="subscripts"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.GetEnumerator">
+            <summary>
+            Implementation of required IEnumerator method GetEnumerator(), which is called 
+            by C# when the iterator is used in a foreach loop. 
+            </summary>
+            <returns>This IRISIterator object</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.StartFrom(System.Object)">
+            <summary>
+            Allows iteration to start from a specified subscript.
+            </summary>
+            <param name="subscript"></param>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.MoveNext">
+            <summary>
+            Implementation of <code>System.Collections.IEnumerator</code> MoveNext method.
+            This can be called directly if desired.
+            </summary>
+            <returns>true if the next value was retrieved, false if there are no more values.</returns>
+        </member>
+        <member name="M:InterSystems.Data.IRISClient.ADO.IRISIterator.Reset">
+            <summary>
+            Resets the iterator so iteration can happen again. If Reset() is called after a foreach loop
+            the iterator can be used again.
+            </summary>
+        </member>
+        <member name="P:InterSystems.Data.IRISClient.ADO.IRISIterator.Current">
+            <summary>
+            The current value in the global for the corresponding subscript. This is what is assigned into 
+            the var in a foreach loop.
+            </summary>
+        </member>
+        <member name="P:InterSystems.Data.IRISClient.ADO.IRISIterator.CurrentSubscript">
+            <summary>
+            The lowest level subscript that corresponds to the current value.
+            </summary>
         </member>
         <member name="T:InterSystems.Data.IRISClient.IRISMetaDataCollectionNames">
             <summary>
@@ -3566,11 +4314,13 @@
             <param name="it"><see cref="T:InterSystems.Data.IRISClient.List.ListItem"/></param>
             <returns>Returns the specified list item as a <see cref="T:System.Byte"/>.</returns>
         </member>
-        <member name="M:InterSystems.Data.IRISClient.List.IRISList.GetByteArray(InterSystems.Data.IRISClient.List.ListItem)">
+        <member name="M:InterSystems.Data.IRISClient.List.IRISList.GetByteArray(InterSystems.Data.IRISClient.List.ListItem,System.Boolean)">
             <summary>
             Returns the $list item in the buffer at the offset. Throws IRISException.
             </summary>
             <param name="it"><see cref="T:InterSystems.Data.IRISClient.List.ListItem"/></param>
+            <param name="SQLBehavior">Default value is true; if the list item is a
+            one byte array containing 0, replace with a 0 byte array.</param>
             <returns>Returns the specified list item as a byte array.</returns>
         </member>
         <member name="M:InterSystems.Data.IRISClient.List.IRISList.GetDate(InterSystems.Data.IRISClient.List.ListItem)">
@@ -4700,6 +5450,11 @@
         <member name="P:InterSystems.Data.IRISClient.LogHelper.ReturnText">
             <summary>
             Stores the text to return when class is disposed.
+            </summary>
+        </member>
+        <member name="T:InterSystems.Data.IRISClient.SHMDevice">
+            <summary>
+            /// SHMDevice is the low level Shared Memory connection to the database.  
             </summary>
         </member>
         <member name="T:InterSystems.Data.IRISClient.TCPDevice">
