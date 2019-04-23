@@ -1,4 +1,5 @@
 # quickstarts-dotnet
+
 This code shows ADO.NET, XEP, Native, and multi-model access in .NET Core. 
 It is required for the .NET QuickStart which can be found here: 
 [.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS). 
@@ -26,12 +27,12 @@ It is required for the .NET QuickStart which can be found here:
 
 4. In your IDE:
 
-    * Open `config.txt` file and modify the `IP` and `password` to be the correct values for your InterSystems IRIS instance. 
+    * Open `connections.config` file and modify the `IP` and `password` to be the correct values for your InterSystems IRIS instance. 
 `Port` and `username` are most likely the defaults but you can verify those as well.
 
 5. In the terminal of your IDE:
 
     * Navigate to ADO.NET code directory: `cd ADO`
-    * Run ADO sample code: `dotnet net`
+    * Run ADO sample code: `dotnet run`
     
     XEP, the Native API, and muti-model code work similarly.  
