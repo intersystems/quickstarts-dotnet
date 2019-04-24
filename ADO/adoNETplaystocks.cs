@@ -110,7 +110,7 @@ namespace myApp
         // Note: Choose 2016/08/12 for date
         public static void Task2(IRISADOConnection connect)
         {
-            Console.WriteLine("On which date? (YYYY/MM/DD) ");
+            Console.WriteLine("On which date? (YYYY-MM-DD) ");
             String queryDate = Console.ReadLine();
             FindTopOnDate(connect, queryDate);
         }
@@ -130,7 +130,7 @@ namespace myApp
             Console.WriteLine("Name: ");
             String name = Console.ReadLine();
 
-            Console.WriteLine("Date: ");
+            Console.WriteLine("Date: (YYYY-MM-DD)");
             String tDate = Console.ReadLine();
 
             Console.WriteLine("Price: ");
@@ -153,7 +153,7 @@ namespace myApp
             Console.WriteLine("New Price: ");
             String updatePrice = Console.ReadLine();
 
-            Console.WriteLine("New Date: ");
+            Console.WriteLine("New Date: (YYYY-MM-DD)");
             String updateDate = Console.ReadLine();
 
             Console.WriteLine("New number of shares: ");
@@ -177,7 +177,7 @@ namespace myApp
         //       choose option 6 using date 2017-08-10 to view your % Gain or Loss after a year.
         public static void Task7(IRISADOConnection connect)
         {
-            Console.WriteLine("Selling on which date? ");
+            Console.WriteLine("Selling on which date? (YYYY-MM-DD)");
             String sellDate = Console.ReadLine();
             PortfolioProfile(connect, sellDate);
         }
@@ -343,7 +343,7 @@ namespace myApp
 
         static IDictionary<string, string> getConnectionsDetails()
         {
-            return generateConfig("..\\connections.config");
+            return generateConfig("../connections.config");
         }
 
         // Helper method: Get connection details from config file

@@ -15,7 +15,7 @@ using InterSystems.XEP;
 
 namespace myApp
 {
-    class multiplay
+    class multimodelplaystocks
     {
         static void Main(string[] args)
         {
@@ -153,7 +153,7 @@ namespace myApp
 
         static IDictionary<string, string> getConnectionsDetails()
         {
-            return generateConfig("..\\connections.config");
+            return generateConfig("../connections.config");
         }
 
         // Helper method: Get connection details from config file

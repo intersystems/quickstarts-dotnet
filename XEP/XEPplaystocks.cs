@@ -123,7 +123,7 @@ namespace myApp
             Console.WriteLine("Stock name: ");
             String name = Console.ReadLine();
 
-            Console.WriteLine("Date (YYYY/MM/DD): ");
+            Console.WriteLine("Date (YYYY-MM-DD): ");
             DateTime date;
             if (DateTime.TryParse(Console.ReadLine(), out date))
             {
@@ -380,7 +380,7 @@ namespace myApp
 
         static IDictionary<string, string> getConnectionsDetails()
         {
-            return generateConfig("..\\connections.config");
+            return generateConfig("../connections.config");
         }
 
         // Helper method: Get connection details from config file
