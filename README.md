@@ -1,7 +1,7 @@
 # quickstarts-dotnet
 This code shows ADO.NET, XEP, Native, multi-model, and Entity Framework access. 
 It is required for the .NET QuickStart which can be found here: 
-[.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS). 
+[.NET QuickStart](https://gettingstarted.intersystems.com/language-quickstarts/net-quickstart/). 
 
 ## Contents
 
@@ -35,8 +35,8 @@ It is required for the .NET QuickStart which can be found here:
 `Port` and `username` are most likely the defaults but you can verify those as well.
     * Due to its complexity, **Entity Framework** requires a few more steps to set up the IDE and configuration file. 
 Please follow our instructions in section 6 - "Use Entity Framework, an example of a third-party API, to store objects to InterSystems IRIS", 
-of [.NET QuickStart](https://learning.intersystems.com/course/view.php?name=.NET%20QS).
+of [.NET QuickStart](https://gettingstarted.intersystems.com/language-quickstarts/net-quickstart/).
 
 You should now have several classes for **ADO.NET**, **XEP**, **Native API**, **multi-model** and **Entity Framework**. 
 
-Detailed instructions are included on the [.NET QuickStart page](https://learning.intersystems.com/course/view.php?name=.NET%20QS).
+Detailed instructions are included on the [.NET QuickStart page](https://gettingstarted.intersystems.com/language-quickstarts/net-quickstart/).
