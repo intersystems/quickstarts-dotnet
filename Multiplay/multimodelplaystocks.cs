@@ -51,28 +51,28 @@ namespace myApp
                 bool always = true;
                 while (always)
                 {
-                    Console.WriteLine("1. Retrieve All Stock Names");
-                    Console.WriteLine("2. Create Objects");
-                    Console.WriteLine("3. Populate Properties");
+                    Console.WriteLine("1. Retrieve all Stock Names using ADO.NET");
+                    Console.WriteLine("2. Generate sample stock info objects and stored into database using XEP");
+                    Console.WriteLine("3. Create mission statements using Native API population methods");
                     Console.WriteLine("4. Quit");
                     Console.WriteLine("What would you like to do? ");
 
                     String option = Console.ReadLine();
                     switch (option)
                     {
-                        // Task 2
+                        // Task 1
                         case "1":
-                            Task2(connection);
+                            Task1(connection);
+                            break;
+
+                        // Task 2
+                        case "2":
+                            Task2(connection, xepEvent);
                             break;
 
                         // Task 3
-                        case "2":
-                            Task3(connection, xepEvent);
-                            break;
-
-                        // Task 4
                         case "3":
-                            Task4(connection, native, xepEvent);
+                            Task3(connection, native, xepEvent);
                             break;
 
                         case "4":
@@ -95,8 +95,8 @@ namespace myApp
             }
         }
 
-        // Task 2: Query data using ADO.NET
-        public static void Task2(IRISADOConnection connection)
+        // Task 1: Query data using ADO.NET
+        public static void Task1(IRISADOConnection connection)
         {
             String sql = "SELECT distinct name FROM demo.stock";
             IRISCommand cmd = new IRISCommand(sql, connection);
@@ -107,8 +107,8 @@ namespace myApp
             }
         }
 
-        // Task 3: Generate sample stock info objects and stored into database using XEP
-        public static void Task3(IRISADOConnection connection, Event xepEvent)
+        // Task 2: Generate sample stock info objects and stored into database using XEP
+        public static void Task2(IRISADOConnection connection, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
             IRISCommand cmd = new IRISCommand(sql, connection);
@@ -128,8 +128,8 @@ namespace myApp
             xepEvent.Store(array.ToArray());
         }
 
-        // Task 4: Use Native API call population methods within InterSystems IRIS for founder and mission statement
-        public static void Task4(IRISADOConnection connection, IRIS native, Event xepEvent)
+        // Task 3: Use Native API call population methods within InterSystems IRIS for founder and mission statement
+        public static void Task3(IRISADOConnection connection, IRIS native, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
             IRISCommand cmd = new IRISCommand(sql, connection);
