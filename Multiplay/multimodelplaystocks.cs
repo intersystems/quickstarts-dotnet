@@ -51,9 +51,9 @@ namespace myApp
                 bool always = true;
                 while (always)
                 {
-                    Console.WriteLine("1. Retrieve all Stock Names using ADO.NET");
-                    Console.WriteLine("2. Generate sample stock info objects and stored into database using XEP");
-                    Console.WriteLine("3. Create mission statements using Native API population methods");
+                    Console.WriteLine("1. Retrieve all stock names using ADO.NET");
+                    Console.WriteLine("2. Generate sample founders and mission statements using XEP");
+                    Console.WriteLine("3. Populate values for founders and mission statements using Native API");
                     Console.WriteLine("4. Quit");
                     Console.WriteLine("What would you like to do? ");
 
@@ -107,7 +107,7 @@ namespace myApp
             }
         }
 
-        // Task 2: Generate sample stock info objects and stored into database using XEP
+        // Task 2: Generate sample founder and mission statement using XEP
         public static void Task2(IRISADOConnection connection, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
@@ -128,7 +128,7 @@ namespace myApp
             xepEvent.Store(array.ToArray());
         }
 
-        // Task 3: Use Native API call population methods within InterSystems IRIS for founder and mission statement
+        // Task 3: Use Native API call population methods within InterSystems IRIS to populate values for founder and mission statement
         public static void Task3(IRISADOConnection connection, IRIS native, Event xepEvent)
         {
             String sql = "SELECT distinct name FROM demo.stock";
