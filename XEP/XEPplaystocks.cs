@@ -57,8 +57,8 @@ namespace myApp
                     Console.WriteLine("1. Make a trade (do not save)");
                     Console.WriteLine("2. Confirm all trades");
                     Console.WriteLine("3. Generate and save multiple trades");
-                    Console.WriteLine("4. Retrieve all trades; show execution statistics");
-                    Console.WriteLine("5. ADO.NET Comparison - Create and save multiple trades");
+                    Console.WriteLine("4. ADO.NET Comparison - Create and save multiple trades");
+                    Console.WriteLine("5. Retrieve all trades; show execution statistics");
                     Console.WriteLine("6. Update all trades; show execution statistics");
                     Console.WriteLine("7. Quit");
                     Console.WriteLine("What would you like to do? ");
@@ -83,12 +83,12 @@ namespace myApp
 
                         // Task 5
                         case "4":
-                            Task5(xepEvent);
+                            Task4(xepEvent);
                             break;
 
                         // Task 4
                         case "5":
-                            Task4(sampleArray, xepPersister);
+                            Task5(sampleArray, xepPersister);
                             break;
 
                         // Task 6
