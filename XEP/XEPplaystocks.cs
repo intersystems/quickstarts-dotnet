@@ -81,14 +81,14 @@ namespace myApp
                             Task3(sampleArray, xepEvent);
                             break;
 
-                        // Task 5
+                        // Task 4
                         case "4":
-                            Task4(xepEvent);
+                            Task4(sampleArray, xepPersister);
                             break;
 
-                        // Task 4
+                        // Task 5
                         case "5":
-                            Task5(sampleArray, xepPersister);
+                            Task5(xepEvent);
                             break;
 
                         // Task 6
@@ -262,7 +262,7 @@ namespace myApp
         }
 
         // Save trade into database using ADO.NET - which is slower than using XEP
-        public static long StoreUsingADO(EventPersister persist, Trade[] sampleArray)
+        public static long StoreUsingADO( Trade[] sampleArray, EventPersister persist)
         {
             long totalTime = new long();
             long startTime = DateTime.Now.Ticks;
