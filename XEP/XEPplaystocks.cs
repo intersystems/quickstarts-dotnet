@@ -207,7 +207,7 @@ namespace myApp
             sampleArray = Trade.generateSampleData(numberADO);
 
             //Save generated trades using ADO
-            long totalADOStore = StoreUsingADO(xepPersister, sampleArray);
+            long totalADOStore = StoreUsingADO(sampleArray, xepPersister);
             Console.WriteLine("Execution time: " + totalADOStore + " ms");
         }
 
@@ -262,7 +262,7 @@ namespace myApp
         }
 
         // Save trade into database using ADO.NET - which is slower than using XEP
-        public static long StoreUsingADO( Trade[] sampleArray, EventPersister persist)
+        public static long StoreUsingADO(Trade[] sampleArray, EventPersister persist)
         {
             long totalTime = new long();
             long startTime = DateTime.Now.Ticks;
