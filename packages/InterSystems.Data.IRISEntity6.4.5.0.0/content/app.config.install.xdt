@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-  <entityFramework>
-    <defaultConnectionFactory xdt:Transform ="RemoveAll"/>
-    <defaultConnectionFactory type="InterSystems.Data.Entity.ConnectionFactory, InterSystems.Data.IRISEntity6" xdt:Transform="Insert" />
-   </entityFramework>
- </configuration>
