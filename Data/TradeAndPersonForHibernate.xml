@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="IRIS for Windows (x86-64) 2018.1.1 (Build 522U)" ts="2018-05-17 16:42:24">
+<Class name="Demo.Person">
+<Super>%Persistent</Super>
+<TimeChanged>64785,60024.519514</TimeChanged>
+<TimeCreated>64733,48551.670287</TimeCreated>
+
+<Property name="FirstName">
+<Type>%String</Type>
+</Property>
+
+<Property name="LastName">
+<Type>%String</Type>
+</Property>
+
+<Property name="Phonenumber">
+<Type>%String</Type>
+</Property>
+
+<Property name="Trades">
+<Type>Hibernate.Trade</Type>
+<Collection>array</Collection>
+<SqlFieldName>Trade</SqlFieldName>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Demo.PersonD</DataLocation>
+<DefaultData>PersonDefaultData</DefaultData>
+<IdLocation>^Demo.PersonD</IdLocation>
+<IndexLocation>^Demo.PersonI</IndexLocation>
+<StreamLocation>^Demo.PersonS</StreamLocation>
+<Data name="PersonDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>FirstName</Value>
+</Value>
+<Value name="3">
+<Value>LastName</Value>
+</Value>
+<Value name="4">
+<Value>Phonenumber</Value>
+</Value>
+</Data>
+<Data name="Trades">
+<Attribute>Trades</Attribute>
+<Structure>subnode</Structure>
+<Subscript>"Trades"</Subscript>
+</Data>
+</Storage>
+</Class>
+
+
+<Class name="Hibernate.Trade">
+<Super>%Library.Persistent</Super>
+<TimeChanged>64774,77838.691524</TimeChanged>
+<TimeCreated>64742,56963</TimeCreated>
+
+<Property name="stockName">
+<Type>%Library.String</Type>
+<Parameter name="MAXLEN" value="10000"/>
+</Property>
+
+<Property name="purchaseDate">
+<Type>%Library.Date</Type>
+</Property>
+
+<Property name="purchasePrice">
+<Type>%Library.Decimal</Type>
+</Property>
+
+<Property name="shares">
+<Type>%Library.Integer</Type>
+</Property>
+
+<Property name="trader">
+<Type>Demo.Person</Type>
+</Property>
+
+<ForeignKey name="traderKey">
+<OnDelete>cascade</OnDelete>
+<Properties>trader</Properties>
+<ReferencedClass>Demo.Person</ReferencedClass>
+</ForeignKey>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Hibernate.TradeD</DataLocation>
+<DefaultData>TradeDefaultData</DefaultData>
+<IdLocation>^Hibernate.TradeD</IdLocation>
+<IndexLocation>^Hibernate.TradeI</IndexLocation>
+<StreamLocation>^Hibernate.TradeS</StreamLocation>
+<Data name="TradeDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>stockName</Value>
+</Value>
+<Value name="3">
+<Value>purchaseDate</Value>
+</Value>
+<Value name="4">
+<Value>purchasePrice</Value>
+</Value>
+<Value name="5">
+<Value>shares</Value>
+</Value>
+<Value name="6">
+<Value>trader</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>
