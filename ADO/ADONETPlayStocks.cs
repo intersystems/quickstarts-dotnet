@@ -15,7 +15,7 @@ using InterSystems.Data.IRISClient;
 
 namespace myApp
 {
-    class adonetplaystocks
+    class ADONETPlayStocks
     {
         static void Main(string[] args)
         {
@@ -23,7 +23,7 @@ namespace myApp
 
             // Initialize dictionary to store connection details from config.txt
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
-            dictionary = generateConfig("..\\..\\..\\config.txt");
+            dictionary = generateConfig("../iris-server-config.txt");
 
             // Retrieve connection information from configuration file
             string ip = dictionary["ip"];

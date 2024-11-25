@@ -4,13 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="InterSystems.Data.IRISClient">
-      <HintPath>InterSystems.Data.IRISClient.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="InterSystems.Data.XEP">
-      <HintPath>InterSystems.Data.XEP.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <PackageReference Include="InterSystems.Data.IRISClient" Version="2.3.2" />
   </ItemGroup>
 </Project>
