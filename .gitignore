@@ -1,11 +1,11 @@
 /ADO/bin/
 /ADO/obj/
 
-/EFPlay/bin/
-/EFPlay/obj/
+/EntityFramework/bin/
+/EntityFramework/obj/
 
-/Multiplay/bin/
-/Multiplay/obj/
+/MultiModel/bin/
+/MultiModel/obj/
 
 /NativeAPI/bin/
 /NativeAPI/obj/
