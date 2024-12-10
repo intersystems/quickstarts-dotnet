@@ -1,0 +1,14 @@
+/ADO/bin/
+/ADO/obj/
+
+/EntityFramework/bin/
+/EntityFramework/obj/
+
+/MultiModel/bin/
+/MultiModel/obj/
+
+/NativeAPI/bin/
+/NativeAPI/obj/
+
+/XEP/bin/
+/XEP/obj/
