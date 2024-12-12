@@ -257,7 +257,7 @@ namespace myApp
             xepEvent.Store(sampleArray);
             long endtime = DateTime.Now.Ticks;
             Console.WriteLine("Saved " + sampleArray.Length + " trade(s).");
-            return endtime - startTime;
+            return (endtime - startTime)/ TimeSpan.TicksPerMillisecond;
         }
 
         // Save trade into database using ADO.NET - which is slower than using XEP
