@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using InterSystems.Data.IRISClient;
 using InterSystems.Data.IRISClient.ADO;
+using System.Text;
 
 namespace myApp
 {
@@ -178,7 +179,10 @@ namespace myApp
             Console.WriteLine("walk forwards");
             foreach (var v in iter)
             {
-                Console.WriteLine("subscript=" + iter.CurrentSubscript + ", value=" + iter.Current);
+                string subscript = Encoding.UTF8.GetString((byte[])iter.CurrentSubscript);
+                string value = irisNative.GetString(globalName, subscript);
+
+                Console.WriteLine($"subscript={subscript}, value={value}");
             }
         }
 
